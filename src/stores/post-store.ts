@@ -1,10 +1,9 @@
-import { makeAutoObservable } from 'mobx'
+import { makeObservable } from 'mobx'
 import { ResourceStore } from './utils/resource-store'
 import { api } from '../api/api'
 
 export class PostStore {
   postId: string = ''
-  selectValue: string | null = null
 
   post = new ResourceStore({
     queryFn: ({ signal }) => {
@@ -21,6 +20,6 @@ export class PostStore {
 
   constructor(postId: string) {
     this.postId = postId
-    makeAutoObservable(this)
+    makeObservable(this)
   }
 }

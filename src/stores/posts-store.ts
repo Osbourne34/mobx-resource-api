@@ -1,22 +1,55 @@
-import { action, computed, makeAutoObservable } from 'mobx'
+import { action, makeObservable, observable } from 'mobx'
 import { api } from '../api/api'
 import { ResourceStore } from './utils/resource-store'
-import { globalCounterStore } from './global-counter-store'
+import { AsyncAction } from './utils/action'
 
 export class PostsStore {
-  search: string = ''
+  @observable search: string = ''
+  @observable selectedUserId: string | null = null
 
   posts = new ResourceStore({
     params: () => ({
       ['title:contains']: this.search,
+      userId: this.selectedUserId,
     }),
     queryFn: ({ signal, params }) => {
       return api.posts({ signal, params })
     },
+    mapper: (payload) => {
+      return payload.map((item) => {
+        return {
+          ...item,
+          uuid: crypto.randomUUID(),
+        }
+      })
+    },
+    enabled: () => Boolean(this.selectedUserId),
+  })
+
+  users = new ResourceStore({
+    queryFn: ({ signal }) => {
+      return api.users({ signal })
+    },
+    onSuccess: (response) => {
+      this.setSelectedUser(response[0].id.toString())
+    },
+    onError: (error) => {
+      console.log(error)
+    },
+  })
+
+  createPost = new AsyncAction({
+    actionFn: api.createPost,
+    onSuccess: this.posts.refetch,
+  })
+
+  deletePost = new AsyncAction({
+    actionFn: api.deletePost,
+    onSuccess: this.posts.refetch,
   })
 
   constructor() {
-    makeAutoObservable(this)
+    makeObservable(this)
   }
 
   @action
@@ -24,8 +57,8 @@ export class PostsStore {
     this.search = search
   }
 
-  @computed
-  multiplyCounter() {
-    return globalCounterStore.counter * 2
+  @action
+  setSelectedUser = (userId: string | null) => {
+    this.selectedUserId = userId
   }
 }

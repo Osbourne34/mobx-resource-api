@@ -1,583 +1,614 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Alex Ivanov",
       "email": "alex1@mail.com"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Maria Petrova",
       "email": "maria2@mail.com"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "John Smith",
       "email": "john3@mail.com"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Anna Kuznetsova",
       "email": "anna4@mail.com"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "David Brown",
       "email": "david5@mail.com"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Olga Smirnova",
       "email": "olga6@mail.com"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Michael Johnson",
       "email": "michael7@mail.com"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Elena Popova",
       "email": "elena8@mail.com"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Daniel Wilson",
       "email": "daniel9@mail.com"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Irina Morozova",
       "email": "irina10@mail.com"
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "Chris Taylor",
       "email": "chris11@mail.com"
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "Natalia Volkova",
       "email": "natalia12@mail.com"
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "Andrew Lee",
       "email": "andrew13@mail.com"
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Svetlana Pavlova",
       "email": "svetlana14@mail.com"
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Robert Harris",
       "email": "robert15@mail.com"
     },
     {
-      "id": 16,
+      "id": "16",
       "name": "Ekaterina Sokolova",
       "email": "ekaterina16@mail.com"
     },
     {
-      "id": 17,
+      "id": "17",
       "name": "Mark Lewis",
       "email": "mark17@mail.com"
     },
     {
-      "id": 18,
+      "id": "18",
       "name": "Yulia Fedorova",
       "email": "yulia18@mail.com"
     },
     {
-      "id": 19,
+      "id": "19",
       "name": "Steven Walker",
       "email": "steven19@mail.com"
     },
     {
-      "id": 20,
+      "id": "20",
       "name": "Polina Andreeva",
       "email": "polina20@mail.com"
     },
     {
-      "id": 21,
+      "id": "21",
       "name": "Kevin Young",
       "email": "kevin21@mail.com"
     },
     {
-      "id": 22,
+      "id": "22",
       "name": "Alina Nikitina",
       "email": "alina22@mail.com"
     },
     {
-      "id": 23,
+      "id": "23",
       "name": "Brian King",
       "email": "brian23@mail.com"
     },
     {
-      "id": 24,
+      "id": "24",
       "name": "Victoria Orlova",
       "email": "victoria24@mail.com"
     },
     {
-      "id": 25,
+      "id": "25",
       "name": "Tom Scott",
       "email": "tom25@mail.com"
     }
   ],
   "posts": [
     {
-      "id": 1,
-      "userId": 1,
-      "title": "First post",
-      "body": "This is the first post content."
-    },
-    {
-      "id": 2,
+      "id": "2",
       "userId": 2,
       "title": "Json Server Tips",
       "body": "How to use json-server effectively."
     },
     {
-      "id": 3,
+      "id": "3",
       "userId": 3,
       "title": "Frontend Basics",
       "body": "Introduction to frontend development."
     },
     {
-      "id": 4,
+      "id": "4",
       "userId": 4,
       "title": "React Hooks",
       "body": "Understanding useState and useEffect."
     },
     {
-      "id": 5,
+      "id": "5",
       "userId": 5,
       "title": "CSS Layouts",
       "body": "Flexbox and Grid explained."
     },
     {
-      "id": 6,
+      "id": "6",
       "userId": 6,
       "title": "TypeScript Intro",
       "body": "Why TypeScript matters."
     },
     {
-      "id": 7,
+      "id": "7",
       "userId": 7,
       "title": "Async JavaScript",
       "body": "Promises and async/await."
     },
     {
-      "id": 8,
+      "id": "8",
       "userId": 8,
       "title": "UI Components",
       "body": "Building reusable UI components."
     },
     {
-      "id": 9,
+      "id": "9",
       "userId": 9,
       "title": "State Management",
       "body": "Redux vs MobX."
     },
     {
-      "id": 10,
+      "id": "10",
       "userId": 10,
       "title": "Testing Basics",
       "body": "Unit and integration tests."
     },
     {
-      "id": 11,
+      "id": "11",
       "userId": 11,
       "title": "Performance",
       "body": "Optimizing web applications."
     },
     {
-      "id": 12,
+      "id": "12",
       "userId": 12,
       "title": "Accessibility",
       "body": "Making apps accessible."
     },
     {
-      "id": 13,
+      "id": "13",
       "userId": 13,
       "title": "REST API",
       "body": "Working with RESTful services."
     },
     {
-      "id": 14,
+      "id": "14",
       "userId": 14,
       "title": "Design Systems",
       "body": "Creating consistent UI."
     },
     {
-      "id": 15,
+      "id": "15",
       "userId": 15,
       "title": "Build Tools",
       "body": "Webpack and Vite overview."
     },
     {
-      "id": 16,
+      "id": "16",
       "userId": 16,
       "title": "Animations",
       "body": "CSS and JS animations."
     },
     {
-      "id": 17,
+      "id": "17",
       "userId": 17,
       "title": "Forms Handling",
       "body": "Managing forms in React."
     },
     {
-      "id": 18,
+      "id": "18",
       "userId": 18,
       "title": "Security",
       "body": "Basic web security concepts."
     },
     {
-      "id": 19,
+      "id": "19",
       "userId": 19,
       "title": "Deployment",
       "body": "Deploying frontend apps."
     },
     {
-      "id": 20,
+      "id": "20",
       "userId": 20,
       "title": "Code Style",
       "body": "Linting and formatting."
     },
     {
-      "id": 21,
+      "id": "21",
       "userId": 21,
       "title": "Monorepos",
       "body": "Managing large codebases."
     },
     {
-      "id": 22,
+      "id": "22",
       "userId": 22,
       "title": "SSR",
       "body": "Server-side rendering basics."
     },
     {
-      "id": 23,
+      "id": "23",
       "userId": 23,
       "title": "PWA",
       "body": "Progressive Web Apps."
     },
     {
-      "id": 24,
+      "id": "24",
       "userId": 24,
       "title": "Internationalization",
       "body": "i18n in web apps."
     },
     {
-      "id": 25,
+      "id": "25",
       "userId": 25,
       "title": "Final Thoughts",
       "body": "Wrapping up the series."
+    },
+    {
+      "id": "304a1dda-779a-4025-8419-3fed5d8ab2c4",
+      "body": "123",
+      "title": "test",
+      "userId": 1
+    },
+    {
+      "id": "c25f15d7-fee7-48a6-95b2-3e8e36a8c9c3",
+      "body": "123",
+      "title": "test",
+      "userId": 1
+    },
+    {
+      "id": "4d0463f2-75b7-48fc-9533-e2ed964058da",
+      "body": "123",
+      "title": "test",
+      "userId": 1
+    },
+    {
+      "id": "be46870d-5cb8-4182-a807-b0acb9344e34",
+      "body": "123",
+      "title": "test",
+      "userId": 1
+    },
+    {
+      "id": "6019eba2-6154-4e3e-9e8e-53ac4ea37c36",
+      "body": "123",
+      "title": "test",
+      "userId": 1
+    },
+    {
+      "id": "a1087e89-2b47-4480-9052-24b214788b8a",
+      "body": "123",
+      "title": "test",
+      "userId": 1
     }
   ],
   "comments": [
     {
-      "id": 1,
+      "id": "1",
       "postId": 1,
       "name": "Maria Petrova",
       "body": "Great first post!"
     },
     {
-      "id": 2,
+      "id": "2",
       "postId": 1,
       "name": "John Smith",
       "body": "Looking forward to more content."
     },
     {
-      "id": 3,
+      "id": "3",
       "postId": 2,
       "name": "Alex Ivanov",
       "body": "Very helpful tips, thanks!"
     },
     {
-      "id": 4,
+      "id": "4",
       "postId": 2,
       "name": "Anna Kuznetsova",
       "body": "I use json-server all the time, great guide."
     },
     {
-      "id": 5,
+      "id": "5",
       "postId": 3,
       "name": "David Brown",
       "body": "Perfect for beginners!"
     },
     {
-      "id": 6,
+      "id": "6",
       "postId": 3,
       "name": "Olga Smirnova",
       "body": "Clear and concise explanation."
     },
     {
-      "id": 7,
+      "id": "7",
       "postId": 4,
       "name": "Michael Johnson",
       "body": "Hooks changed the way I write React."
     },
     {
-      "id": 8,
+      "id": "8",
       "postId": 4,
       "name": "Elena Popova",
       "body": "useEffect is so powerful."
     },
     {
-      "id": 9,
+      "id": "9",
       "postId": 5,
       "name": "Daniel Wilson",
       "body": "Grid is underrated!"
     },
     {
-      "id": 10,
+      "id": "10",
       "postId": 5,
       "name": "Irina Morozova",
       "body": "Finally understood Flexbox thanks to this."
     },
     {
-      "id": 11,
+      "id": "11",
       "postId": 6,
       "name": "Chris Taylor",
       "body": "TypeScript saves so much debugging time."
     },
     {
-      "id": 12,
+      "id": "12",
       "postId": 6,
       "name": "Natalia Volkova",
       "body": "Migrated my project to TS last week!"
     },
     {
-      "id": 13,
+      "id": "13",
       "postId": 7,
       "name": "Andrew Lee",
       "body": "async/await is a game changer."
     },
     {
-      "id": 14,
+      "id": "14",
       "postId": 7,
       "name": "Svetlana Pavlova",
       "body": "Good explanation of Promises."
     },
     {
-      "id": 15,
+      "id": "15",
       "postId": 8,
       "name": "Robert Harris",
       "body": "Reusable components are the key to scalability."
     },
     {
-      "id": 16,
+      "id": "16",
       "postId": 8,
       "name": "Ekaterina Sokolova",
       "body": "We use this pattern at my company."
     },
     {
-      "id": 17,
+      "id": "17",
       "postId": 9,
       "name": "Mark Lewis",
       "body": "Redux is overkill for small apps."
     },
     {
-      "id": 18,
+      "id": "18",
       "postId": 9,
       "name": "Yulia Fedorova",
       "body": "I prefer Zustand over both!"
     },
     {
-      "id": 19,
+      "id": "19",
       "postId": 10,
       "name": "Steven Walker",
       "body": "Testing is often overlooked, glad someone wrote this."
     },
     {
-      "id": 20,
+      "id": "20",
       "postId": 10,
       "name": "Polina Andreeva",
       "body": "Jest is my go-to for unit tests."
     },
     {
-      "id": 21,
+      "id": "21",
       "postId": 11,
       "name": "Kevin Young",
       "body": "Lazy loading made a huge difference for us."
     },
     {
-      "id": 22,
+      "id": "22",
       "postId": 11,
       "name": "Alina Nikitina",
       "body": "Don't forget about code splitting!"
     },
     {
-      "id": 23,
+      "id": "23",
       "postId": 12,
       "name": "Brian King",
       "body": "Accessibility is so important and often ignored."
     },
     {
-      "id": 24,
+      "id": "24",
       "postId": 12,
       "name": "Victoria Orlova",
       "body": "ARIA labels helped us pass our audit."
     },
     {
-      "id": 25,
+      "id": "25",
       "postId": 13,
       "name": "Tom Scott",
       "body": "REST is still very relevant in 2024."
     },
     {
-      "id": 26,
+      "id": "26",
       "postId": 13,
       "name": "Alex Ivanov",
       "body": "Great overview of REST principles."
     },
     {
-      "id": 27,
+      "id": "27",
       "postId": 14,
       "name": "Maria Petrova",
       "body": "Design systems save so much time."
     },
     {
-      "id": 28,
+      "id": "28",
       "postId": 14,
       "name": "John Smith",
       "body": "We built our own system and never looked back."
     },
     {
-      "id": 29,
+      "id": "29",
       "postId": 15,
       "name": "Anna Kuznetsova",
       "body": "Vite is blazing fast compared to Webpack."
     },
     {
-      "id": 30,
+      "id": "30",
       "postId": 15,
       "name": "David Brown",
       "body": "Switched to Vite last month, no regrets."
     },
     {
-      "id": 31,
+      "id": "31",
       "postId": 16,
       "name": "Olga Smirnova",
       "body": "CSS animations are so smooth nowadays."
     },
     {
-      "id": 32,
+      "id": "32",
       "postId": 16,
       "name": "Michael Johnson",
       "body": "GSAP is great for complex animations."
     },
     {
-      "id": 33,
+      "id": "33",
       "postId": 17,
       "name": "Elena Popova",
       "body": "React Hook Form is my favorite for forms."
     },
     {
-      "id": 34,
+      "id": "34",
       "postId": 17,
       "name": "Daniel Wilson",
       "body": "Formik vs RHF is always a debate."
     },
     {
-      "id": 35,
+      "id": "35",
       "postId": 18,
       "name": "Irina Morozova",
       "body": "XSS prevention is a must-know."
     },
     {
-      "id": 36,
+      "id": "36",
       "postId": 18,
       "name": "Chris Taylor",
       "body": "Always sanitize user inputs!"
     },
     {
-      "id": 37,
+      "id": "37",
       "postId": 19,
       "name": "Natalia Volkova",
       "body": "Vercel makes deployment so easy."
     },
     {
-      "id": 38,
+      "id": "38",
       "postId": 19,
       "name": "Andrew Lee",
       "body": "We use Docker for our deployments."
     },
     {
-      "id": 39,
+      "id": "39",
       "postId": 20,
       "name": "Svetlana Pavlova",
       "body": "ESLint + Prettier is the perfect combo."
     },
     {
-      "id": 40,
+      "id": "40",
       "postId": 20,
       "name": "Robert Harris",
       "body": "Consistent code style is so underrated."
     },
     {
-      "id": 41,
+      "id": "41",
       "postId": 21,
       "name": "Ekaterina Sokolova",
       "body": "Turborepo changed how we manage our monorepo."
     },
     {
-      "id": 42,
+      "id": "42",
       "postId": 21,
       "name": "Mark Lewis",
       "body": "Nx is also a great tool for monorepos."
     },
     {
-      "id": 43,
+      "id": "43",
       "postId": 22,
       "name": "Yulia Fedorova",
       "body": "Next.js SSR is amazing for SEO."
     },
     {
-      "id": 44,
+      "id": "44",
       "postId": 22,
       "name": "Steven Walker",
       "body": "Nuxt does the same for Vue!"
     },
     {
-      "id": 45,
+      "id": "45",
       "postId": 23,
       "name": "Polina Andreeva",
       "body": "PWAs feel like native apps on mobile."
     },
     {
-      "id": 46,
+      "id": "46",
       "postId": 23,
       "name": "Kevin Young",
       "body": "Service workers are the backbone of PWAs."
     },
     {
-      "id": 47,
+      "id": "47",
       "postId": 24,
       "name": "Alina Nikitina",
       "body": "i18n is always tricky to set up but worth it."
     },
     {
-      "id": 48,
+      "id": "48",
       "postId": 24,
       "name": "Brian King",
       "body": "We use react-intl and it works great."
     },
     {
-      "id": 49,
+      "id": "49",
       "postId": 25,
       "name": "Victoria Orlova",
       "body": "Great series, learned a lot!"
     },
     {
-      "id": 50,
+      "id": "50",
       "postId": 25,
       "name": "Tom Scott",
       "body": "Looking forward to the next series!"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

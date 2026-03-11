@@ -15,6 +15,21 @@ export const api = {
     return data
   },
 
+  createPost: async (body: Post, axiosConfig?: AxiosRequestConfig) => {
+    const { data } = await axiosInstanse.post<Post>('posts', body, axiosConfig)
+
+    return data
+  },
+
+  deletePost: async (postId: Post['id'], axiosConfig?: AxiosRequestConfig) => {
+    const { data } = await axiosInstanse.delete<Post>(
+      `posts/${postId}`,
+      axiosConfig,
+    )
+
+    return data
+  },
+
   postById: async (id: string, axiosConfig?: AxiosRequestConfig) => {
     const { data } = await axiosInstanse<Post>({
       ...axiosConfig,
@@ -25,7 +40,7 @@ export const api = {
   },
 
   commentsByPostId: async (
-    postId: number,
+    postId: Post['id'],
     axiosConfig?: AxiosRequestConfig,
   ) => {
     const { data } = await axiosInstanse<Comment[]>(
@@ -36,8 +51,9 @@ export const api = {
     return data
   },
 
-  users: async () => {
+  users: async (axiosConfig?: AxiosRequestConfig) => {
     const { data } = await axiosInstanse<User[]>({
+      ...axiosConfig,
       url: 'users',
     })
 
@@ -46,7 +62,7 @@ export const api = {
 }
 
 type Post = {
-  id: number
+  id: number | string
   userId: number
   title: string
   body: string

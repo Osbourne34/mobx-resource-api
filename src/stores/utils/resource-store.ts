@@ -1,15 +1,18 @@
 import { createAtom, reaction, type IAtom, type IReactionDisposer } from 'mobx'
 
-interface Options<TData, TParams> {
+interface Options<TData, TParams, TMapper = TData> {
   queryFn: (options: {
     signal: AbortSignal
     params?: TParams
   }) => Promise<TData>
   params?: () => TParams
   enabled?: () => boolean
+  onSuccess?: (response: TData) => void
+  onError?: (error: unknown) => void
+  mapper?: (payload: TData) => TMapper
 }
 
-export class ResourceStore<TData, TParams> {
+export class ResourceStore<TData, TParams, TMapper = TData> {
   private atom: IAtom
 
   private _data: TData | undefined = undefined
@@ -18,9 +21,9 @@ export class ResourceStore<TData, TParams> {
   private abortController: AbortController | null = null
   private reactionParamms: IReactionDisposer | null = null
 
-  private readonly options: Options<TData, TParams>
+  private readonly options: Options<TData, TParams, TMapper>
 
-  constructor(options: Options<TData, TParams>) {
+  constructor(options: Options<TData, TParams, TMapper>) {
     this.options = options
     this.atom = createAtom(
       'Resource',
@@ -29,9 +32,16 @@ export class ResourceStore<TData, TParams> {
     )
   }
 
-  get data() {
+  private mapData(data: TData): TMapper {
+    return this.options.mapper
+      ? this.options.mapper(data)
+      : (data as unknown as TMapper)
+  }
+
+  get data(): TMapper | undefined {
     this.atom.reportObserved()
-    return this._data
+    if (this._data === undefined) return undefined
+    return this.mapData(this._data)
   }
 
   get isLoading() {
@@ -67,6 +77,8 @@ export class ResourceStore<TData, TParams> {
       })
       if (this.abortController === currentController) {
         this._data = data
+
+        this.options.onSuccess?.(data)
       }
     } catch (error) {
       const err = error as { code: string }
@@ -74,6 +86,8 @@ export class ResourceStore<TData, TParams> {
 
       if (this.abortController === currentController) {
         this._isError = true
+
+        this.options.onError?.(error)
       }
     } finally {
       if (this.abortController === currentController) {
