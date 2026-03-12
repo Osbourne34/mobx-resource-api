@@ -10,6 +10,7 @@ interface Options<TData, TParams, TMapper = TData> {
   onSuccess?: (response: TData) => void
   onError?: (error: unknown) => void
   mapper?: (payload: TData) => TMapper
+  initState?: TData
 }
 
 export class ResourceStore<TData, TParams, TMapper = TData> {
@@ -25,6 +26,7 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
 
   constructor(options: Options<TData, TParams, TMapper>) {
     this.options = options
+    this._data = options.initState
     this.atom = createAtom(
       'Resource',
       () => this.startTicking(),
@@ -68,7 +70,7 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
 
     this._isError = false
     this._isLoading = true
-    this._data = undefined
+    this._data = this.options.initState
 
     try {
       const data = await this.options.queryFn({
@@ -79,6 +81,8 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
         this._data = data
 
         this.options.onSuccess?.(data)
+
+        return data
       }
     } catch (error) {
       const err = error as { code: string }
@@ -122,7 +126,7 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
     console.log('stopTicking')
     this.reactionParamms?.()
     this.reactionParamms = null
-    this._data = undefined
+    this._data = this.options.initState
 
     if (this.abortController && this._isLoading) {
       this.abortController?.abort()

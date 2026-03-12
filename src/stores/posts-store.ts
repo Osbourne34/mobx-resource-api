@@ -24,6 +24,7 @@ export class PostsStore {
       })
     },
     enabled: () => Boolean(this.selectedUserId),
+    initState: [],
   })
 
   users = new ResourceStore({
@@ -38,7 +39,7 @@ export class PostsStore {
     },
   })
 
-  createPost = new AsyncAction({
+  createPostAction = new AsyncAction({
     actionFn: api.createPost,
     onSuccess: this.posts.refetch,
   })
@@ -47,6 +48,20 @@ export class PostsStore {
     actionFn: api.deletePost,
     onSuccess: this.posts.refetch,
   })
+
+  click = async () => {
+    const posts = await this.posts.refetch()
+    console.log(posts?.map((item) => item.id))
+  }
+
+  createPost = async () => {
+    this.createPostAction.action({
+      body: '123',
+      title: 'test',
+      userId: 1,
+      id: crypto.randomUUID(),
+    })
+  }
 
   constructor() {
     makeObservable(this)

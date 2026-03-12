@@ -15,6 +15,14 @@ export const Posts = observer(() => {
   const users = postsStore.users.data
   const isLoadingUsers = postsStore.users.isLoading
 
+  const handleCreate = () => {
+    postsStore.createPost()
+  }
+
+  const handleDelete = (id: number | string) => {
+    postsStore.deletePost.action(id)
+  }
+
   return (
     <div>
       <h1>Posts</h1>
@@ -23,17 +31,9 @@ export const Posts = observer(() => {
         Refetch Posts
       </Button>
       <Button
-        loading={postsStore.createPost.isLoading}
+        loading={postsStore.createPostAction.isLoading}
         type="primary"
-        onClick={async () => {
-          const data = await postsStore.createPost.action({
-            body: '123',
-            title: 'test',
-            userId: 1,
-            id: crypto.randomUUID(),
-          })
-          console.log(data, 'result action')
-        }}
+        onClick={handleCreate}
       >
         Create Post
       </Button>
@@ -88,9 +88,7 @@ export const Posts = observer(() => {
                 <Button
                   variant="filled"
                   color="danger"
-                  onClick={() => {
-                    postsStore.deletePost.action(post.id)
-                  }}
+                  onClick={() => handleDelete(post.id)}
                 >
                   Delete
                 </Button>
