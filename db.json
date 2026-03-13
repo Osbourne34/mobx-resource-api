@@ -128,175 +128,55 @@
   ],
   "posts": [
     {
-      "id": "2",
-      "userId": 2,
-      "title": "Json Server Tips",
-      "body": "How to use json-server effectively."
-    },
-    {
-      "id": "3",
-      "userId": 3,
-      "title": "Frontend Basics",
-      "body": "Introduction to frontend development."
-    },
-    {
-      "id": "4",
-      "userId": 4,
-      "title": "React Hooks",
-      "body": "Understanding useState and useEffect."
-    },
-    {
-      "id": "5",
-      "userId": 5,
-      "title": "CSS Layouts",
-      "body": "Flexbox and Grid explained."
-    },
-    {
-      "id": "6",
-      "userId": 6,
-      "title": "TypeScript Intro",
-      "body": "Why TypeScript matters."
-    },
-    {
-      "id": "7",
-      "userId": 7,
-      "title": "Async JavaScript",
-      "body": "Promises and async/await."
-    },
-    {
-      "id": "8",
-      "userId": 8,
-      "title": "UI Components",
-      "body": "Building reusable UI components."
-    },
-    {
-      "id": "9",
-      "userId": 9,
-      "title": "State Management",
-      "body": "Redux vs MobX."
-    },
-    {
-      "id": "10",
-      "userId": 10,
-      "title": "Testing Basics",
-      "body": "Unit and integration tests."
-    },
-    {
-      "id": "11",
-      "userId": 11,
-      "title": "Performance",
-      "body": "Optimizing web applications."
-    },
-    {
-      "id": "12",
-      "userId": 12,
-      "title": "Accessibility",
-      "body": "Making apps accessible."
-    },
-    {
-      "id": "13",
-      "userId": 13,
-      "title": "REST API",
-      "body": "Working with RESTful services."
-    },
-    {
-      "id": "14",
-      "userId": 14,
-      "title": "Design Systems",
-      "body": "Creating consistent UI."
-    },
-    {
-      "id": "15",
-      "userId": 15,
-      "title": "Build Tools",
-      "body": "Webpack and Vite overview."
-    },
-    {
-      "id": "16",
-      "userId": 16,
-      "title": "Animations",
-      "body": "CSS and JS animations."
-    },
-    {
-      "id": "17",
-      "userId": 17,
-      "title": "Forms Handling",
-      "body": "Managing forms in React."
-    },
-    {
-      "id": "18",
-      "userId": 18,
-      "title": "Security",
-      "body": "Basic web security concepts."
-    },
-    {
-      "id": "19",
-      "userId": 19,
-      "title": "Deployment",
-      "body": "Deploying frontend apps."
-    },
-    {
-      "id": "20",
-      "userId": 20,
-      "title": "Code Style",
-      "body": "Linting and formatting."
-    },
-    {
-      "id": "21",
-      "userId": 21,
-      "title": "Monorepos",
-      "body": "Managing large codebases."
-    },
-    {
-      "id": "22",
-      "userId": 22,
-      "title": "SSR",
-      "body": "Server-side rendering basics."
-    },
-    {
-      "id": "23",
-      "userId": 23,
-      "title": "PWA",
-      "body": "Progressive Web Apps."
-    },
-    {
-      "id": "24",
-      "userId": 24,
-      "title": "Internationalization",
-      "body": "i18n in web apps."
-    },
-    {
-      "id": "25",
-      "userId": 25,
-      "title": "Final Thoughts",
-      "body": "Wrapping up the series."
-    },
-    {
-      "id": "5d21dcee-09f6-42f4-bb5d-4ea918098751",
+      "id": "d28ebc3a-f20d-42b7-ad1f-ea19d0fe6d84",
       "body": "123",
       "title": "test",
       "userId": 1
     },
     {
-      "id": "e0ce8ab2-528a-4fe6-8097-81b71714515a",
+      "id": "6de9262e-34c0-43b6-8dda-c0e66e7df926",
       "body": "123",
       "title": "test",
       "userId": 1
     },
     {
-      "id": "4aa298b5-2a62-4d1e-a046-b46154cd6180",
+      "id": "531e2fe6-8f93-47f8-81fa-7740019d40c1",
       "body": "123",
       "title": "test",
       "userId": 1
     },
     {
-      "id": "85bdf10c-5c5c-417c-89e0-8e8cb8c55922",
+      "id": "ecf6a3e4-0220-4f53-9aef-2fee9934f61f",
       "body": "123",
       "title": "test",
       "userId": 1
     },
     {
-      "id": "2aa3d5dc-4d52-4538-99d7-2e5a1142e412",
+      "id": "ff3fe12d-555a-4d65-a893-be4eed67e654",
+      "body": "123",
+      "title": "test",
+      "userId": 1
+    },
+    {
+      "id": "6184253d-52b5-4e2c-9c50-62216a422d63",
+      "body": "123",
+      "title": "test",
+      "userId": 1
+    },
+    {
+      "id": "5105b83f-d17d-4230-a3a8-3959e51bc819",
+      "body": "123",
+      "title": "test",
+      "userId": 1
+    },
+    {
+      "id": "16ca62ca-b38a-468e-adbc-49b4e3a16b12",
+      "body": "123",
+      "title": "test",
+      "userId": 1
+    },
+    {
+      "id": "8fd3f389-9819-4777-8de1-21dd5890ab08",
       "body": "123",
       "title": "test",
       "userId": 1

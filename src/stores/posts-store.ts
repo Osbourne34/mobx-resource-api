@@ -44,6 +44,19 @@ export class PostsStore {
     onSuccess: this.posts.refetch,
   })
 
+  clearPosts = () => {
+    this.posts.setData([])
+  }
+
+  createLocalPost = () => {
+    this.posts.setData((prev) => {
+      return [
+        ...prev,
+        { body: '1', id: crypto.randomUUID(), title: 'test', userId: 555 },
+      ]
+    })
+  }
+
   deletePost = new AsyncAction({
     actionFn: api.deletePost,
     onSuccess: this.posts.refetch,
@@ -51,7 +64,7 @@ export class PostsStore {
 
   click = async () => {
     const posts = await this.posts.refetch()
-    console.log(posts?.map((item) => item.id))
+    console.log(posts?.map((item) => item.userId))
   }
 
   createPost = async () => {

@@ -1,4 +1,13 @@
-import { Button, Spin, Alert, Typography, Input, Flex, Select } from 'antd'
+import {
+  Button,
+  Spin,
+  Alert,
+  Typography,
+  Input,
+  Flex,
+  Select,
+  Skeleton,
+} from 'antd'
 import { usePostsStore } from '../../pages/posts/posts-context'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
@@ -9,6 +18,7 @@ export const Posts = observer(() => {
 
   const posts = postsStore.posts.data
   const isLoadingPosts = postsStore.posts.isLoading
+  const isInitialLoading = postsStore.posts.isInitialLoading
   const isErrorPosts = postsStore.posts.isError
   const refetchPosts = postsStore.posts.refetch
 
@@ -37,6 +47,10 @@ export const Posts = observer(() => {
       >
         Create Post
       </Button>
+      <Button onClick={() => postsStore.createLocalPost()}>
+        Create Local Post
+      </Button>
+      <Button onClick={() => postsStore.clearPosts()}>Clear Posts</Button>
       <Flex gap="middle" style={{ marginBottom: '10px' }}>
         <Input
           placeholder="Search"
@@ -63,39 +77,42 @@ export const Posts = observer(() => {
         />
       </Flex>
 
-      {isLoadingPosts && <Spin />}
+      {(isInitialLoading || isLoadingUsers) && <Skeleton />}
       {isErrorPosts && <Alert showIcon message="Error" type="error" />}
-      {!isLoadingPosts && !isErrorPosts && (
-        <Flex vertical gap="small">
-          {posts?.map((post) => (
-            <Flex
-              justify="space-between"
-              style={{ border: '1px solid #ccc', padding: '8px' }}
-              key={post.id}
-            >
-              <Flex gap="small">
-                <Typography.Text>{post.title}</Typography.Text> |
-                <Typography.Text>{post.body}</Typography.Text>
+      {!isInitialLoading && !isErrorPosts && (
+        <Spin spinning={isLoadingPosts}>
+          <Flex vertical gap="small">
+            {posts?.map((post) => (
+              <Flex
+                justify="space-between"
+                style={{ border: '1px solid #ccc', padding: '8px' }}
+                key={post.id}
+              >
+                <Flex gap="small">
+                  <Typography.Text>{post.title}</Typography.Text> |
+                  <Typography.Text>{post.body}</Typography.Text>|
+                  <Typography.Text>{post.uuid}</Typography.Text>
+                </Flex>
+                <Flex gap="small">
+                  <Button
+                    onClick={() => {
+                      push(`/posts/${post.id}`)
+                    }}
+                  >
+                    Post
+                  </Button>
+                  <Button
+                    variant="filled"
+                    color="danger"
+                    onClick={() => handleDelete(post.id)}
+                  >
+                    Delete
+                  </Button>
+                </Flex>
               </Flex>
-              <Flex gap="small">
-                <Button
-                  onClick={() => {
-                    push(`/posts/${post.id}`)
-                  }}
-                >
-                  Post
-                </Button>
-                <Button
-                  variant="filled"
-                  color="danger"
-                  onClick={() => handleDelete(post.id)}
-                >
-                  Delete
-                </Button>
-              </Flex>
-            </Flex>
-          ))}
-        </Flex>
+            ))}
+          </Flex>
+        </Spin>
       )}
     </div>
   )

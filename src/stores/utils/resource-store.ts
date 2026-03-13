@@ -7,7 +7,7 @@ interface Options<TData, TParams, TMapper = TData> {
   }) => Promise<TData>
   params?: () => TParams
   enabled?: () => boolean
-  onSuccess?: (response: TData) => void
+  onSuccess?: (response: TMapper) => void
   onError?: (error: unknown) => void
   mapper?: (payload: TData) => TMapper
   initState?: TData
@@ -18,6 +18,7 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
 
   private _data: TData | undefined = undefined
   private _isLoading: boolean = false
+  private _hasLoaded: boolean = false
   private _isError: boolean = false
   private abortController: AbortController | null = null
   private reactionParamms: IReactionDisposer | null = null
@@ -51,16 +52,30 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
     return this._isLoading
   }
 
+  get isInitialLoading() {
+    this.atom.reportObserved()
+    return this._isLoading && !this._hasLoaded
+  }
+
   get isError() {
     this.atom.reportObserved()
     return this._isError
   }
 
-  refetch = this.fetch.bind(this)
+  refetch = async () => {
+    const data = await this.fetch()
+    return data !== undefined ? this.mapData(data) : undefined
+  }
+
+  setData = (updater: TData | ((prev: TData) => TData)) => {
+    const newState =
+      updater instanceof Function ? updater(this._data!) : updater
+
+    this._data = newState
+    this.atom.reportChanged()
+  }
 
   private async fetch() {
-    this.atom.reportChanged()
-
     if (this.abortController) {
       this.abortController?.abort()
     }
@@ -70,7 +85,8 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
 
     this._isError = false
     this._isLoading = true
-    this._data = this.options.initState
+    this.atom.reportChanged()
+    // this._data = this.options.initState
 
     try {
       const data = await this.options.queryFn({
@@ -79,8 +95,8 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
       })
       if (this.abortController === currentController) {
         this._data = data
-
-        this.options.onSuccess?.(data)
+        this._hasLoaded = true
+        this.options.onSuccess?.(this.mapData(data))
 
         return data
       }
