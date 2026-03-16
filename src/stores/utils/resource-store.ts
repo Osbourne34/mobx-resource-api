@@ -1,4 +1,14 @@
-import { createAtom, reaction, type IAtom, type IReactionDisposer } from 'mobx'
+import {
+  action,
+  computed,
+  createAtom,
+  makeObservable,
+  observable,
+  reaction,
+  runInAction,
+  type IAtom,
+  type IReactionDisposer,
+} from 'mobx'
 
 interface Options<TData, TParams, TMapper = TData> {
   queryFn: (options: {
@@ -16,39 +26,32 @@ interface Options<TData, TParams, TMapper = TData> {
 export class ResourceStore<TData, TParams, TMapper = TData> {
   private atom: IAtom
 
-  private _data: TData | undefined = undefined
-  private _mappedData: TMapper | undefined = undefined
-  private _isLoading: boolean = false
-  private _hasLoaded: boolean = false
-  private _isError: boolean = false
+  @observable private _data: TData | undefined = undefined
+  @observable private _isLoading: boolean = false
+  @observable private _hasLoaded: boolean = false
+  @observable private _isError: boolean = false
   private abortController: AbortController | null = null
-  private reactionParamms: IReactionDisposer | null = null
+  private reactionParams: IReactionDisposer | null = null
 
   private readonly options: Options<TData, TParams, TMapper>
 
   constructor(options: Options<TData, TParams, TMapper>) {
     this.options = options
     this._data = options.initState
-    this._mappedData =
-      options.initState !== undefined
-        ? this.mapData(options.initState)
-        : undefined
     this.atom = createAtom(
       'Resource',
       () => this.startTicking(),
       () => this.stopTicking(),
     )
+    makeObservable(this)
   }
 
-  private mapData(data: TData): TMapper {
+  @computed
+  private get _mappedData(): TMapper | undefined {
+    if (this._data === undefined) return undefined
     return this.options.mapper
-      ? this.options.mapper(data)
-      : (data as unknown as TMapper)
-  }
-
-  private updateMappedCache(): void {
-    this._mappedData =
-      this._data !== undefined ? this.mapData(this._data) : undefined
+      ? this.options.mapper(this._data)
+      : (this._data as unknown as TMapper)
   }
 
   get data(): TMapper | undefined {
@@ -71,75 +74,85 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
     return this._isError
   }
 
-  refetch = async () => {
-    const data = await this.fetch()
-    return data !== undefined ? this.mapData(data) : undefined
-  }
-
-  setData = (updater: TData | ((prev: TData) => TData)) => {
-    const newState =
-      updater instanceof Function ? updater(this._data!) : updater
+  @action
+  setData = (updater: TData | ((prev: TData | undefined) => TData)) => {
+    const newState = updater instanceof Function ? updater(this._data) : updater
 
     this._data = newState
-    this.updateMappedCache()
-    this.atom.reportChanged()
   }
 
-  private async fetch() {
-    if (this.abortController) {
-      this.abortController?.abort()
-    }
+  private async fetch(params?: TParams) {
+    this.abortController?.abort()
 
     this.abortController = new AbortController()
     const currentController = this.abortController
 
-    this._isError = false
-    this._isLoading = true
-    this.atom.reportChanged()
+    runInAction(() => {
+      this._isError = false
+      this._isLoading = true
+    })
 
     try {
       const data = await this.options.queryFn({
         signal: currentController.signal,
-        params: this.options.params?.(),
+        params,
       })
       if (this.abortController === currentController) {
-        this._data = data
-        this.updateMappedCache()
-        this._hasLoaded = true
+        runInAction(() => {
+          this._data = data
+          this._hasLoaded = true
+        })
+
         this.options.onSuccess?.(this._mappedData as TMapper)
 
         return data
       }
     } catch (error) {
-      const err = error as { code: string }
-      if (err.code === 'ERR_CANCELED') return
+      if (currentController.signal.aborted) return
 
       if (this.abortController === currentController) {
-        this._isError = true
-
-        this.options.onError?.(error)
+        runInAction(() => {
+          this._isError = true
+          this.options.onError?.(error)
+        })
       }
     } finally {
       if (this.abortController === currentController) {
-        this._isLoading = false
-        this.atom.reportChanged()
+        runInAction(() => {
+          this._isLoading = false
+        })
       }
     }
+  }
+
+  refetch = async () => {
+    await this.fetch(this.options.params?.())
+    return this._mappedData
+  }
+
+  abort = () => {
+    this.abortController?.abort()
+  }
+
+  dispose() {
+    this.stopTicking()
   }
 
   private startTicking(): void {
     console.log('startTicking')
 
-    this.reactionParamms = reaction(
+    this.reactionParams = reaction(
       () => {
         return {
           params: this.options.params?.(),
           enabled: this.options.enabled?.() ?? true,
         }
       },
-      ({ enabled }) => {
+      ({ params, enabled }) => {
         if (enabled) {
-          this.fetch()
+          this.fetch(params)
+        } else {
+          this.abortController?.abort()
         }
       },
       {
@@ -150,13 +163,20 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
 
   private stopTicking() {
     console.log('stopTicking')
-    this.reactionParamms?.()
-    this.reactionParamms = null
-    this._data = this.options.initState
+
+    this.reactionParams?.()
+    this.reactionParams = null
 
     if (this.abortController && this._isLoading) {
-      this.abortController?.abort()
+      this.abortController.abort()
       this.abortController = null
     }
+
+    runInAction(() => {
+      this._data = this.options.initState
+      this._isLoading = false
+      this._hasLoaded = false
+      this._isError = false
+    })
   }
 }

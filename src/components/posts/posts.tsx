@@ -11,6 +11,7 @@ import {
 import { usePostsStore } from '../../pages/posts/posts-context'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
+import { toJS } from 'mobx'
 
 export const Posts = observer(() => {
   const postsStore = usePostsStore()
@@ -32,6 +33,8 @@ export const Posts = observer(() => {
   const handleDelete = (id: number | string) => {
     postsStore.deletePost.action(id)
   }
+
+  console.log(toJS(posts), 'posts')
 
   return (
     <div>

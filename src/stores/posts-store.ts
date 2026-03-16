@@ -51,7 +51,7 @@ export class PostsStore {
   createLocalPost = () => {
     this.posts.setData((prev) => {
       return [
-        ...prev,
+        ...(prev ?? []),
         { body: '1', id: crypto.randomUUID(), title: 'test', userId: 555 },
       ]
     })
