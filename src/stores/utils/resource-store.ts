@@ -17,6 +17,7 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
   private atom: IAtom
 
   private _data: TData | undefined = undefined
+  private _mappedData: TMapper | undefined = undefined
   private _isLoading: boolean = false
   private _hasLoaded: boolean = false
   private _isError: boolean = false
@@ -28,6 +29,10 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
   constructor(options: Options<TData, TParams, TMapper>) {
     this.options = options
     this._data = options.initState
+    this._mappedData =
+      options.initState !== undefined
+        ? this.mapData(options.initState)
+        : undefined
     this.atom = createAtom(
       'Resource',
       () => this.startTicking(),
@@ -41,10 +46,14 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
       : (data as unknown as TMapper)
   }
 
+  private updateMappedCache(): void {
+    this._mappedData =
+      this._data !== undefined ? this.mapData(this._data) : undefined
+  }
+
   get data(): TMapper | undefined {
     this.atom.reportObserved()
-    if (this._data === undefined) return undefined
-    return this.mapData(this._data)
+    return this._mappedData
   }
 
   get isLoading() {
@@ -72,6 +81,7 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
       updater instanceof Function ? updater(this._data!) : updater
 
     this._data = newState
+    this.updateMappedCache()
     this.atom.reportChanged()
   }
 
@@ -86,7 +96,6 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
     this._isError = false
     this._isLoading = true
     this.atom.reportChanged()
-    // this._data = this.options.initState
 
     try {
       const data = await this.options.queryFn({
@@ -95,8 +104,9 @@ export class ResourceStore<TData, TParams, TMapper = TData> {
       })
       if (this.abortController === currentController) {
         this._data = data
+        this.updateMappedCache()
         this._hasLoaded = true
-        this.options.onSuccess?.(this.mapData(data))
+        this.options.onSuccess?.(this._mappedData as TMapper)
 
         return data
       }
