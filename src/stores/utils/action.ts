@@ -1,49 +1,52 @@
-import { createAtom, type IAtom } from 'mobx'
+import { makeObservable, observable, runInAction } from 'mobx'
 
-type Options<TVariables, TData> = {
-  actionFn: (variables: TVariables) => Promise<TData>
-  onSuccess?: (data: TData, variables: TVariables) => void
-  onError?: (error: unknown, variables: TVariables) => void
+type Options<Variables, Data> = {
+  actionFn: (variables: Variables) => Promise<Data>
+  onSuccess?: (data: Data, variables: Variables) => void
+  onError?: (error: unknown, variables: Variables) => void
 }
 
-export class AsyncAction<TVariables, TData> {
-  private atom: IAtom
+export class AsyncAction<Variables, Data> {
+  @observable private _isLoading: boolean = false
+  @observable private _isError: boolean = false
 
-  private _isLoading: boolean = false
-  private _isError: boolean = false
+  private readonly options: Options<Variables, Data>
 
-  private readonly options: Options<TVariables, TData>
-
-  constructor(options: Options<TVariables, TData>) {
+  constructor(options: Options<Variables, Data>) {
     this.options = options
-    this.atom = createAtom('Mutation')
+    makeObservable(this)
   }
 
   get isLoading() {
-    this.atom.reportObserved()
     return this._isLoading
   }
 
   get isError() {
-    this.atom.reportObserved()
     return this._isError
   }
 
-  action = async (variables: TVariables) => {
-    this.atom.reportChanged()
-
-    try {
+  action = async (variables: Variables) => {
+    runInAction(() => {
       this._isError = false
       this._isLoading = true
+    })
+
+    try {
       const result = await this.options.actionFn(variables)
+
       this.options.onSuccess?.(result, variables)
+
       return result
     } catch (error) {
-      this._isError = true
+      runInAction(() => {
+        this._isError = true
+      })
+
       this.options.onError?.(error, variables)
     } finally {
-      this._isLoading = false
-      this.atom.reportChanged()
+      runInAction(() => {
+        this._isLoading = false
+      })
     }
   }
 }
