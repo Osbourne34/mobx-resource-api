@@ -128,9 +128,12 @@ export class QueryManager<Data, Params, Mapper = Data> {
 
   abort = () => {
     this.abortController?.abort()
+    runInAction(() => {
+      this._isLoading = false
+    })
   }
 
-  dispose() {
+  dispose = () => {
     this.stopTicking()
   }
 
