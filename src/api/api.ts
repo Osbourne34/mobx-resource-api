@@ -21,6 +21,16 @@ export const api = {
     return data
   },
 
+  updatePost: async (body: Post, axiosConfig?: AxiosRequestConfig) => {
+    const { data } = await axiosInstanse.put<Post>(
+      `posts/${body.id}`,
+      body,
+      axiosConfig,
+    )
+
+    return data
+  },
+
   deletePost: async (postId: Post['id'], axiosConfig?: AxiosRequestConfig) => {
     const { data } = await axiosInstanse.delete<Post>(
       `posts/${postId}`,
@@ -61,21 +71,21 @@ export const api = {
   },
 }
 
-type Post = {
+export type Post = {
   id: number | string
   userId: number
   title: string
   body: string
 }
 
-type Comment = {
+export type Comment = {
   id: number
   postId: number
   name: string
   body: string
 }
 
-type User = {
+export type User = {
   id: number
   name: string
   email: string

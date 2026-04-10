@@ -10,31 +10,22 @@ import {
 } from 'antd'
 import { usePostsStore } from '../../pages/posts/posts-context'
 import { observer } from 'mobx-react'
-import { useHistory } from 'react-router-dom'
-import { toJS } from 'mobx'
 
 export const Posts = observer(() => {
   const postsStore = usePostsStore()
-  const { push } = useHistory()
 
   const posts = postsStore.posts.data
   const isLoadingPosts = postsStore.posts.isLoading
-  const isInitialLoading = postsStore.posts.isInitialLoading
+  const isInitialLoadingPosts = postsStore.posts.isInitialLoading
   const isErrorPosts = postsStore.posts.isError
   const refetchPosts = postsStore.posts.refetch
 
   const users = postsStore.users.data
   const isLoadingUsers = postsStore.users.isLoading
 
-  const handleCreate = () => {
-    postsStore.createPost()
-  }
-
   const handleDelete = (id: number | string) => {
     postsStore.deletePost.action(id)
   }
-
-  console.log(toJS(posts), 'posts')
 
   return (
     <div>
@@ -42,13 +33,6 @@ export const Posts = observer(() => {
 
       <Button onClick={refetchPosts} style={{ marginBottom: '10px' }}>
         Refetch Posts
-      </Button>
-      <Button
-        loading={postsStore.createPostAction.isLoading}
-        type="primary"
-        onClick={handleCreate}
-      >
-        Create Post
       </Button>
       <Button onClick={() => postsStore.createLocalPost()}>
         Create Local Post
@@ -80,9 +64,9 @@ export const Posts = observer(() => {
         />
       </Flex>
 
-      {(isInitialLoading || isLoadingUsers) && <Skeleton />}
+      {(isInitialLoadingPosts || isLoadingUsers) && <Skeleton />}
       {isErrorPosts && <Alert showIcon message="Error" type="error" />}
-      {!isInitialLoading && !isErrorPosts && (
+      {!isInitialLoadingPosts && !isErrorPosts && (
         <Spin spinning={isLoadingPosts}>
           <Flex vertical gap="small">
             {posts?.map((post) => (
@@ -97,13 +81,6 @@ export const Posts = observer(() => {
                   <Typography.Text>{post.uuid}</Typography.Text>
                 </Flex>
                 <Flex gap="small">
-                  <Button
-                    onClick={() => {
-                      push(`/posts/${post.id}`)
-                    }}
-                  >
-                    Post
-                  </Button>
                   <Button
                     variant="filled"
                     color="danger"

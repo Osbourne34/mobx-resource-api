@@ -1,15 +1,23 @@
-import { Button, Flex, Typography } from "antd";
-import { globalCounterStore } from "../stores/global-counter-store";
-import { observer } from "mobx-react";
+import { Button, Flex, Typography } from 'antd'
 
-export const Counter = observer(() => {
+export const Counter = ({
+  onDec,
+  onInc,
+  onReset,
+  counter,
+}: {
+  onInc?: () => void
+  onDec?: () => void
+  onReset?: () => void
+  counter: number
+}) => {
   return (
     <Flex gap="small" align="center">
-      <Button onClick={() => globalCounterStore.inc()}>+1</Button>
-      <Typography.Text>{globalCounterStore.counter}</Typography.Text>
-      <Button onClick={() => globalCounterStore.dec()}>-1</Button>
+      <Button onClick={onInc}>+1</Button>
+      <Typography.Text>{counter}</Typography.Text>
+      <Button onClick={onDec}>-1</Button>
 
-      <Button onClick={() => globalCounterStore.reset()}>Reset</Button>
+      {onReset && <Button onClick={onReset}>Reset</Button>}
     </Flex>
-  );
-});
+  )
+}

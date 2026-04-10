@@ -1,17 +1,17 @@
 import { makeObservable } from 'mobx'
-import { ResourceStore } from './utils/resource-store'
+import { QueryManager } from './utils/query-manager'
 import { api } from '../api/api'
 
 export class PostStore {
   postId: string = ''
 
-  post = new ResourceStore({
+  post = new QueryManager({
     queryFn: ({ signal }) => {
       return api.postById(this.postId, { signal })
     },
   })
 
-  comments = new ResourceStore({
+  comments = new QueryManager({
     queryFn: ({ signal }) => {
       return api.commentsByPostId(this.post.data!.id, { signal })
     },

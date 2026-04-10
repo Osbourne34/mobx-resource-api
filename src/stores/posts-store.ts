@@ -1,19 +1,24 @@
 import { action, makeObservable, observable } from 'mobx'
 import { api } from '../api/api'
-import { ResourceStore } from './utils/resource-store'
+import { QueryManager } from './utils/query-manager'
 import { AsyncAction } from './utils/action'
+import { AbortError } from './utils/abort-error'
 
 export class PostsStore {
   @observable search: string = ''
   @observable selectedUserId: string | null = null
 
-  posts = new ResourceStore({
+  posts = new QueryManager({
     params: () => ({
       ['title:contains']: this.search,
       userId: this.selectedUserId,
     }),
-    queryFn: ({ signal, params }) => {
-      return api.posts({ signal, params })
+    queryFn: async ({ signal, params }) => {
+      if (!params?.userId) {
+        throw new AbortError('no userId')
+      }
+
+      return await api.posts({ signal, params })
     },
     mapper: (payload) => {
       return payload.map((item) => {
@@ -23,21 +28,27 @@ export class PostsStore {
         }
       })
     },
-    enabled: () => Boolean(this.selectedUserId),
     initState: [],
   })
 
-  users = new ResourceStore({
+  users = new QueryManager({
     queryFn: ({ signal }) => {
       return api.users({ signal })
     },
     onSuccess: (response) => {
       this.setSelectedUser(response[0].id.toString())
     },
-    onError: (error) => {
-      console.log(error)
-    },
   })
+
+  @action
+  setSearch = (search: string) => {
+    this.search = search
+  }
+
+  @action
+  setSelectedUser = (userId: string | null) => {
+    this.selectedUserId = userId
+  }
 
   createPostAction = new AsyncAction({
     actionFn: api.createPost,
@@ -57,36 +68,17 @@ export class PostsStore {
     })
   }
 
+  updatePostAction = new AsyncAction({
+    actionFn: api.updatePost,
+    onSuccess: this.posts.refetch,
+  })
+
   deletePost = new AsyncAction({
     actionFn: api.deletePost,
     onSuccess: this.posts.refetch,
   })
 
-  click = async () => {
-    const posts = await this.posts.refetch()
-    console.log(posts?.map((item) => item.userId))
-  }
-
-  createPost = async () => {
-    this.createPostAction.action({
-      body: '123',
-      title: 'test',
-      userId: 1,
-      id: crypto.randomUUID(),
-    })
-  }
-
   constructor() {
     makeObservable(this)
-  }
-
-  @action
-  setSearch = (search: string) => {
-    this.search = search
-  }
-
-  @action
-  setSelectedUser = (userId: string | null) => {
-    this.selectedUserId = userId
   }
 }
